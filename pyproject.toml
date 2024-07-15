@@ -1,8 +1,26 @@
+[tool.poetry]
+name = "CJ24 Unique Universes"
+version = "0.1.0"
+description = "Description"
+authors = ["Snipy7374 <snipy7374@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "3.12.*"
+
+[tool.poetry.dev-dependencies]
+ruff = "~0.5.0"
+pre-commit = "~3.7.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.ruff]
 # Increase the line length. This breaks PEP8 but it is way easier to work with.
 # The original reason for this limit was a standard vim terminal is only 79 characters,
 # but this doesn't really apply anymore.
-line-length = 119
+line-length = 120
 # Target Python 3.12. If you decide to use a different version of Python
 # you will need to update this value.
 target-version = "py312"
