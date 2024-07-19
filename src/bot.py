@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from typing import override
 
 import disnake
 from disnake.ext import commands
@@ -21,6 +22,7 @@ class Universe(commands.InteractionBot):
     async def on_ready(self) -> None:
         _log.info(f"Logged in as {self.user}")
 
-    async def start(self) -> None:
+    @override
+    async def start(self) -> None:  # type: ignore[reportincomplatibleMethodOverride]
         setup_logging()
         await super().start(EnvVars.BOT_TOKEN, reconnect=True)
