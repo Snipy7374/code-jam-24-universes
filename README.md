@@ -2,6 +2,18 @@
 
 This repository is the entry of the unique universes team for the Python Discord Code Jam 2024.
 
+# Docker
+## Building
+
+```sh
+docker build -t unique-universes -f .docker/Dockerfile .
+```
+
+## Running
+```sh
+docker run --rm -it -e BOT_TOKEN=YOUR_TOKEN_HERE unique-universes
+```
+
 # Setting Up the Dev Env
 
 If you are a team member make sure to read this section, otherwise you can skip this.
@@ -71,7 +83,7 @@ To be able to execute the bot locally you will need to create and grab the token
 
 After having copied the token you need to create a file called `.env` at the root of the project. Then type  `BOT_TOKEN=` and paste the actual bot token after the equal sign. The file should look like this:
 
-```
+```ini
 BOT_TOKEN=ExampleOfBotTokenHere
 ```
 
