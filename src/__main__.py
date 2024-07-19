@@ -1,7 +1,6 @@
 import asyncio
 
 from src.bot import Universe
-from src.constants import EnvVars
 
 
 async def main() -> None:

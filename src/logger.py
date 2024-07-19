@@ -1,19 +1,16 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
 
-import sys
 import logging
+import sys
+from typing import TYPE_CHECKING, ClassVar
 
 import colorama
-
 from src.constants import Config
 
 if TYPE_CHECKING:
     from src.constants import LoggingLevel
 
-__all__: tuple[str, ...] = (
-    "setup_logging",
-)
+__all__: tuple[str, ...] = ("setup_logging",)
 
 
 def setup_logging() -> None:
@@ -22,7 +19,6 @@ def setup_logging() -> None:
     handler = logging.StreamHandler(stream=sys.stdout)
     handler.setFormatter(LogFormatter())
     logger.addHandler(handler)
-        
 
     for k, v in logger.manager.loggerDict.items():
         if k.startswith("src") and isinstance(v, logging.Logger):
@@ -31,7 +27,7 @@ def setup_logging() -> None:
 
 
 class LogFormatter(logging.Formatter):
-    COLOR_MAP: dict[LoggingLevel, str] = {
+    COLOR_MAP: ClassVar[dict[LoggingLevel, str]] = {
         logging.DEBUG: colorama.Fore.MAGENTA,
         logging.INFO: colorama.Fore.BLUE,
         logging.WARNING: colorama.Fore.YELLOW,

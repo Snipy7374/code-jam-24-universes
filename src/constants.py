@@ -1,12 +1,9 @@
-
-from typing import TypeAlias
-
 import os
 
 import dotenv
 
-LoggingLevel: TypeAlias = int | str
-dotenv.load_dotenv()  # type: ignore
+type LoggingLevel = int | str
+dotenv.load_dotenv()
 
 __all__: tuple[str, ...] = (
     "EnvVars",
