@@ -12,7 +12,7 @@ __all__: tuple[str, ...] = (
 
 
 class EnvVars:
-    BOT_TOKEN: str = os.getenv("BOT_TOKEN") or ""
+    BOT_TOKEN: str = os.getenv("BOT_TOKEN", "")
 
 
 class Config:
