@@ -27,3 +27,39 @@ class Universe(commands.InteractionBot):
         setup_logging()
         self.load_extensions("./src/exts")
         await super().start(EnvVars.BOT_TOKEN, reconnect=True)
+
+
+bot = Universe()
+
+
+@bot.slash_command(
+    name="about",
+    description="Provides information about the bot's creators, its purpose, and its version",
+)
+async def about(interaction: disnake.ApplicationCommandInteraction) -> None:
+    embed_dict = {
+        "title": "About",
+        "description": (
+            "This Discord bot was created by the "
+            "Unique Universes team for the Python Discord Code Jam 2024.\n\n"
+            "This bot's main feature is a 2D shooter minigame."
+        ),
+        "color": 0x87CEEB,
+        "fields": [
+            {
+                "name": "Team members",
+                "value": ("\\_\\_snipy\\_\\_\nastroyo\nEarthKii\nMmesek\nnostradamus"),
+                "inline": False,
+            },
+            {
+                "name": "Version",
+                "value": "-----TODO-----",
+                "Inline": False,
+            },
+        ],
+        "footer": {"text": "Made by the Unique Universes team"},
+    }
+    await interaction.response.send_message(embed=disnake.Embed.from_dict(embed_dict))
+
+
+bot.run()
