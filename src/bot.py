@@ -25,4 +25,5 @@ class Universe(commands.InteractionBot):
     @override
     async def start(self) -> None:  # type: ignore[reportincomplatibleMethodOverride]
         setup_logging()
+        self.load_extensions("./src/exts")
         await super().start(EnvVars.BOT_TOKEN, reconnect=True)
