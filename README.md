@@ -87,6 +87,12 @@ After having copied the token you need to create a file called `.env` at the roo
 BOT_TOKEN=ExampleOfBotTokenHere
 ```
 
+# Run project
+
+```sh
+python -m src
+```
+
 ## Final words
 
 Now you're ready to go, your local copy of the repository is ready to be ran.
