@@ -2,7 +2,7 @@
 
 This repository is the entry of the unique universes team for the Python Discord Code Jam 2024.
 
-# Docker
+# Docker Usage
 ## Building
 
 ```sh
@@ -12,6 +12,32 @@ docker build -t unique-universes -f .docker/Dockerfile .
 ## Running
 ```sh
 docker run --rm -it -e BOT_TOKEN=YOUR_TOKEN_HERE unique-universes
+```
+
+# Manual installation
+## Installing the dependencies
+
+To install all the required dependencies to run the bot execute these commands:
+
+```shell
+pip install poetry
+poetry install
+```
+
+## Creating the .env file
+
+To be able to execute the bot locally you will need to create and grab the token of a discord bot. To create a bot head to the [discord developer portal]("https://discord.com/developers/applications/") and follow these [instructions to create a bot and copy its token]("https://discordpy.readthedocs.io/en/stable/discord.html").
+
+After having copied the token you need to create a file called `.env` at the root of the project. Then type  `BOT_TOKEN=` and paste the actual bot token after the equal sign. The file should look like this:
+
+```ini
+BOT_TOKEN=ExampleOfBotTokenHere
+```
+
+## Run project
+
+```sh
+python -m src
 ```
 
 # Setting Up the Dev Env
@@ -61,30 +87,13 @@ $ .venv/bin/Activate.ps1
 
 To deactivate the venv type `deactivate` in the terminal.
 
-## Installing the dependencies
+## Pre-commit
 
-To install all the required dependencies to run the bot execute these commands:
+Before commiting, make sure to run any pre-commit checks.
+Install pre-commit if you haven't done yet:
 
-```shell
-pip install poetry
-```
-and then
-```shell
-poetry install
-```
-finally run
-```shell
+```sh
 pre-commit install
-```
-
-## Creating the .env file
-
-To be able to execute the bot locally you will need to create and grab the token of a discord bot. To create a bot head to the [discord developer portal]("https://discord.com/developers/applications/") and follow these [instructions to create a bot and copy its token]("https://discordpy.readthedocs.io/en/stable/discord.html").
-
-After having copied the token you need to create a file called `.env` at the root of the project. Then type  `BOT_TOKEN=` and paste the actual bot token after the equal sign. The file should look like this:
-
-```ini
-BOT_TOKEN=ExampleOfBotTokenHere
 ```
 
 ## Final words
