@@ -26,7 +26,11 @@ class UnknownValueError(TypeError): ...
 
 class Database:
     def __init__(self) -> None:
-        self.db_connection: aiosqlite.Connection
+        self._db_connection: aiosqlite.Connection
+
+    @property
+    def db_connection(self) -> aiosqlite.Connection:
+        return self._db_connection
 
     async def init(self) -> None:
         if not Path.is_dir("build"):
