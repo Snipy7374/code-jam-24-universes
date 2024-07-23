@@ -6,6 +6,7 @@ from typing import override
 import disnake
 from disnake.ext import commands
 from src.constants import EnvVars
+from src.database import Database
 from src.logger import setup_logging
 
 __all__: tuple[str] = ("Universe",)
@@ -18,6 +19,7 @@ class Universe(commands.InteractionBot):
         super().__init__(
             intents=disnake.Intents.none(),
         )
+        self.database = Database()
 
     async def on_ready(self) -> None:
         _log.info(f"Logged in as {self.user}")
