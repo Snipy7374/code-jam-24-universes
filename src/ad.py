@@ -1,10 +1,8 @@
-import re
-from random import choices
-from string import ascii_letters
+import json
+from pathlib import Path
+from random import choice
 
 import disnake
-import requests
-from html2text import HTML2Text
 
 type JSON = dict[str, "JSON"] | list["JSON"] | str | int | float | bool | None
 
@@ -19,37 +17,14 @@ class Ad(disnake.Embed):
     """
 
     def __init__(self) -> None:
-        page_object: JSON = requests.get(
-            "https://en.wikipedia.org/w/rest.php/v1/search/title",
-            {
-                "limit": 2,
-                "q": choices(ascii_letters, k=2),  # noqa: S311
-                # ascii_letters, k=2 -> 26² = 676 possible ads at runtime
-            },
-            timeout=5,
-        ).json()["pages"][1]  # the second page_object is chosen to avoid the disambiguation pages
+        with Path("./ads.json").open() as file:
+            data: JSON = json.loads(file.read())
+        data: JSON = choice(data)  # noqa: S311
+        self.title: str = data["title"]
+        super().__init__(title=self.title, description=data["description"])
 
-        self.key: str = page_object["key"]
-        title: str = page_object["title"]
-        url: str = f"https://en.wikipedia.org/wiki/{self.key}"
-        image_url: str = f"https:{page_object["thumbnail"]["url"]}"
-        html: str = requests.get(
-            f"https://en.wikipedia.org/w/rest.php/v1/page/{self.key}/html",
-            timeout=5,
-        ).text  # 4096 characters is the maximum length of the description
-
-        html: str = re.sub(r"<figure.*?</figure>", "", html)
-        # HTML2Text doesn't strip figures even if ignore_images is True
-
-        html2text = HTML2Text(baseurl=url, bodywidth=0)
-        html2text.ignore_images = True
-
-        description: str = html2text.handle(html)[:4096]
-
-        super().__init__(title=title, url=url, description=description)
-
-        self.set_thumbnail(url=image_url)
+        self.set_thumbnail(url=data["thumbnail_url"])
         self.set_footer(text="Unique Universes 2024")
 
     def __repr__(self) -> str:
-        return f"<Ad {self.key=}>"
+        return f"<Ad {self.title=}>"
