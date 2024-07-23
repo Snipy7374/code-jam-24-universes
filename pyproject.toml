@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "CJ24 Unique Universes"
+name = "src"
 version = "0.1.0"
 description = "Description"
 authors = ["Snipy7374 <snipy7374@gmail.com>", "Mmesek", "EarthKiii", "stroh13", "Astroyo"]
