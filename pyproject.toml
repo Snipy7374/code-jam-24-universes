@@ -2,8 +2,9 @@
 name = "src"
 version = "0.1.0"
 description = "Description"
-authors = ["Snipy7374 <snipy7374@gmail.com>"]
+authors = ["Snipy7374 <snipy7374@gmail.com>", "Mmesek", "EarthKiii", "stroh13", "Astroyo"]
 license = "MIT"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "3.12.*"
