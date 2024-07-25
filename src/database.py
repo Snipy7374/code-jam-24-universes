@@ -80,15 +80,19 @@ class Database:
             await self.db_connection.commit()
             return await cursor.fetchall()
 
-    async def create_player(self, user_id: int) -> PlayerData:
+    async def create_player(self, user_id: int) -> PlayerData | None:
         """Create a row for a player in the database using user id."""
         try:
-            await self.execute("INSERT INTO players_data (_id) VALUES (?)", user_id)
-        except sqlite3.IntegrityError as error:
+            async with self.db_connection.cursor() as cursor:
+                await cursor.execute("INSERT INTO players_data (_id) VALUES (?) RETURNING *", (user_id,))
+                data = await cursor.fetchone()
+        except aiosqlite.IntegrityError as error:
             error_message = "Player Already Exists"
             raise PlayerExistsError(error_message) from error
         await self.db_connection.commit()
-        return await self.fetch_player(user_id)
+        
+        if data is not None:
+            return PlayerData(data)
 
     async def fetch_player(self, user_id: int) -> PlayerData:
         """Fetch the data for a player in the database using user id.
