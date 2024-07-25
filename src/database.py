@@ -47,7 +47,7 @@ class Database:
                     loses int DEFAULT 0
                 )
             """)
-        self.db_connection = connection
+        self._db_connection = connection
 
     async def execute(self, sql: str, *args: str | int) -> None:
         """Execute an sql statement."""
