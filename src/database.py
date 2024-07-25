@@ -6,12 +6,12 @@ import aiosqlite
 class PlayerData:
     def __init__(self, data: tuple) -> None:
         self._raw_data = data
-        self.user_id = data[0]
-        self.shots_fired = data[1]
-        self.hits = data[2]
-        self.misses = data[3]
-        self.wins = data[4]
-        self.loses = data[5]
+        self.user_id: int = data[0]
+        self.shots_fired: int = data[1]
+        self.hits: int = data[2]
+        self.misses: int = data[3]
+        self.wins: int = data[4]
+        self.loses: int = data[5]
 
 
 class PlayerNotFoundError(LookupError): ...
