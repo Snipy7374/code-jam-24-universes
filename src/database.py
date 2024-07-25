@@ -1,8 +1,3 @@
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from collections.abc import Iterable
-
 from pathlib import Path
 
 import aiosqlite
@@ -90,9 +85,10 @@ class Database:
             error_message = "Player Already Exists"
             raise PlayerExistsError(error_message) from error
         await self.db_connection.commit()
-        
-        if data is not None:
-            return PlayerData(data)
+
+        if data is None:
+            return None
+        return PlayerData(data)  # type: ignore[reportArgumentType]
 
     async def fetch_player(self, user_id: int) -> PlayerData:
         """Fetch the data for a player in the database using user id.
