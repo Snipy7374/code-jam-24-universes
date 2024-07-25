@@ -33,8 +33,8 @@ class Database:
         return self._db_connection
 
     async def init(self) -> None:
-        if not Path.is_dir("build"):
-            Path.mkdir("./build")
+        if not Path("build").is_dir():
+            Path("./build").mkdir()
         connection = await aiosqlite.connect("./build/database.db")
         async with connection.cursor() as cursor:
             await cursor.execute("""
