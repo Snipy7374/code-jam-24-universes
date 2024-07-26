@@ -17,7 +17,7 @@ class Ad(disnake.Embed):
     """
 
     def __init__(self) -> None:
-        with Path("./ads.json").open() as file:
+        with Path("src/ads.json").open() as file:
             data: JSON = json.loads(file.read())
         data: JSON = choice(data)  # noqa: S311
         self.title: str = data["title"]

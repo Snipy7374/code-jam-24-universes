@@ -1,5 +1,12 @@
-[{
-    "title": "Ad 1",
-    "thumbnail_url": "https://picsum.photos/200/300",
-    "description": "Description of Ad 1"
-}]
+[
+    {
+        "title": "__Suggested Article__: Astrological Anomaly Causes Spaceship to Miss Target",
+        "thumbnail_url": "https://i.imghippo.com/files/AkvTd1722011698.jpg",
+        "description": "In an unprecedented event, the spaceship Galactic Voyager missed its critical shot on the enemy vessel Nebula Raider due to an unexpected astrological phenomenon. \n\nAccording to the ship's astrologer, the rare alignment of Mars and Neptune created a gravitational anomaly that disrupted the ship's targeting systems.Captain Orion Starfire reported, \n\n\"We had the Nebula Raider in our sights, but just as we were about to fire, the targeting system went haywire. It was as if the stars themselves were against us.\" \n\nAstrologers on board explained that the alignment, known as the \"Cosmic Crossfire,\" occurs once every 500 years and can cause significant disruptions in space navigation and targeting systems. \"The gravitational pull from Mars and Neptune created a distortion field that interfered with our equipment,\" said Chief Astrologer Celeste Moonbeam. While some crew members remain skeptical, the incident has sparked a renewed interest in the role of astrology in space travel. \n\n\"It's a reminder that even in the vastness of space, we are still connected to the cosmic forces,\" added Moonbeam. The Galactic Voyager is now undergoing recalibration to ensure that future missions are not affected by such astrological events. Meanwhile, the Nebula Raider has taken advantage of the situation, retreating to a safe distance."
+    },
+    {
+        "title": "__Related Text__: Exo-Xplorers Recalls Gyroscope Model \"GyroMax-3000\" Of Their Spaceship \"Stellar Voyager\" Due To Malfunction",
+        "thumbnail_url": "https://i.imghippo.com/files/1cvEe1722011514.jpg",
+        "description": "The renowned company Exo-Xplorers has issued a recall for one of its gyroscope model, the \"GyroMax-3000\", due to a critical malfunction. This gyroscope is crucial for maintaining the spaceship's orientation and stability. \n\n**The Issue** \n\nThe malfunction identified is a precession drift, where the gyroscope's axis of rotation gradually shifts, leading to inaccurate readings and potential navigational errors. This drift can compromise the spaceship's ability to maintain its intended trajectory. \n\n**Impact on Missions** \n\nThe \"GyroMax-3000\" gyroscope is integral to the \"Stellar Voyager's\" inertial navigation system. The precession drift issue has already affected several missions, causing minor deviations that highlighted the need for immediate corrective action. \n\n**Response and Measures** \n\nThe engineering team has initiated a comprehensive recall of all \"GyroMax-3000\" units. Affected gyroscopes will be replaced with an upgraded model, the \"GyroMax-4000,\" which features enhanced stability and improved resistance to precession drift. Inspections of other critical systems are also underway to ensure no further malfunctions. \n\n**Looking Ahead** \n\n The recall underscores the importance of rigorous testing and continuous improvement in spacecraft technology. The \"Stellar Voyager\" remains committed to its mission of exploring the cosmos, confident that the new \"GyroMax-4000\" will provide the reliability needed for its ambitious journeys ahead."
+    }
+]
