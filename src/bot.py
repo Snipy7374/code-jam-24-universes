@@ -8,7 +8,7 @@ from disnake.ext import commands
 from src.constants import EnvVars
 from src.logger import setup_logging
 
-__all__: tuple[str] = ("Universe",)
+__all__: tuple[str, ...] = ("Universe",)
 
 _log = logging.getLogger(__name__)
 
