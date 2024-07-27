@@ -21,7 +21,7 @@ def setup_logging() -> None:
     logger.addHandler(handler)
 
     for k, v in logger.manager.loggerDict.items():
-        if k.startswith("src") and isinstance(v, logging.Logger):
+        if k.startswith(("src", "__main__")) and isinstance(v, logging.Logger):
             v.setLevel(Config.LOGGING_LEVEL)
             v.addHandler(handler)
 

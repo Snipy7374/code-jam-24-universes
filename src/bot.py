@@ -3,14 +3,16 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, override
 
-if TYPE_CHECKING:
-    import aiosqlite
-
 import disnake
 from disnake.ext import commands
 from src.constants import EnvVars
 from src.database import Database
 from src.logger import setup_logging
+
+if TYPE_CHECKING:
+    from asyncio import AbstractEventLoop
+
+    from aiosqlite import Connection
 
 __all__: tuple[str] = ("Universe",)
 
@@ -18,9 +20,10 @@ _log = logging.getLogger(__name__)
 
 
 class Universe(commands.InteractionBot):
-    def __init__(self, db_connection: aiosqlite.Connection) -> None:
+    def __init__(self, loop: AbstractEventLoop, db_connection: Connection) -> None:
         super().__init__(
             intents=disnake.Intents.none(),
+            loop=loop,
         )
         self.database = Database(connection=db_connection)
 
@@ -30,5 +33,7 @@ class Universe(commands.InteractionBot):
     @override
     async def start(self) -> None:  # type: ignore[reportincomplatibleMethodOverride]
         setup_logging()
+        _log.info("Loading extensions")
         self.load_extensions("./src/exts")
+        _log.info("Extensions loading finished")
         await super().start(EnvVars.BOT_TOKEN, reconnect=True)
