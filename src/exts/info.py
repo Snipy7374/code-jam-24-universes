@@ -30,11 +30,6 @@ class InfoCommands(commands.Cog):
             value="\\_\\_snipy__\nastroyo\nEarthKii\nMmesek\nnostradamus",
             inline=False,
         )
-        embed.add_field(
-            name="Version",
-            value="-----TODO-----",
-            inline=False,
-        )
         embed.set_footer(text="Made by the Unique Universes team")
         await inter.send(embed=embed)
 
