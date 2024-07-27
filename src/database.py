@@ -23,30 +23,32 @@ class PlayerExistsError(NameError): ...
 class UnknownValueError(TypeError): ...
 
 
+async def setup_db() -> aiosqlite.Connection:
+    """Set up the database and get the connection to the database."""
+    if not Path("build").is_dir():
+        Path("./build").mkdir()
+    connection = await aiosqlite.connect("./build/database.db")
+    async with connection.cursor() as cursor:
+        await cursor.execute("""
+            CREATE TABLE IF NOT EXISTS players_data (
+                _id int PRIMARY KEY,
+                shots_fired int DEFAULT 0,
+                hits int DEFAULT 0,
+                misses int DEFAULT 0,
+                wins int DEFAULT 0,
+                loses int DEFAULT 0
+            )
+        """)
+    return connection
+
+
 class Database:
-    def __init__(self) -> None:
-        self._db_connection: aiosqlite.Connection
+    def __init__(self, connection: aiosqlite.Connection) -> None:
+        self._db_connection: aiosqlite.Connection = connection
 
     @property
     def db_connection(self) -> aiosqlite.Connection:
         return self._db_connection
-
-    async def init(self) -> None:
-        if not Path("build").is_dir():
-            Path("./build").mkdir()
-        connection = await aiosqlite.connect("./build/database.db")
-        async with connection.cursor() as cursor:
-            await cursor.execute("""
-                CREATE TABLE IF NOT EXISTS players_data (
-                    _id int PRIMARY KEY,
-                    shots_fired int DEFAULT 0,
-                    hits int DEFAULT 0,
-                    misses int DEFAULT 0,
-                    wins int DEFAULT 0,
-                    loses int DEFAULT 0
-                )
-            """)
-        self._db_connection = connection
 
     async def execute(self, sql: str, *args: str | int) -> None:
         """Execute an sql statement."""

@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import logging
-from typing import override
+from typing import TYPE_CHECKING, override
+
+if TYPE_CHECKING:
+    import aiosqlite
 
 import disnake
 from disnake.ext import commands
@@ -15,11 +18,11 @@ _log = logging.getLogger(__name__)
 
 
 class Universe(commands.InteractionBot):
-    def __init__(self) -> None:
+    def __init__(self, db_connection: aiosqlite.Connection) -> None:
         super().__init__(
             intents=disnake.Intents.none(),
         )
-        self.database = Database()
+        self.database = Database(connection=db_connection)
 
     async def on_ready(self) -> None:
         _log.info(f"Logged in as {self.user}")

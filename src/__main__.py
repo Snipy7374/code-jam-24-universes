@@ -1,11 +1,14 @@
 import asyncio
 
 from src.bot import Universe
+from src.database import setup_db
 
 
 async def main() -> None:
-    bot = Universe()
-    await bot.database.init()
+    connection = await setup_db()
+    bot = Universe(
+        db_connection=connection,
+    )
     try:
         await bot.start()
     finally:
