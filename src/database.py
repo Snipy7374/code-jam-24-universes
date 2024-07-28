@@ -120,6 +120,29 @@ class Database:
             raise UnknownValueError(error_message) from error
         await self.execute("UPDATE players_data SET ?=? WHERE _id=?", value_name, value_data + 1, user_id)
 
+    async def update_stats(  # noqa: PLR0913
+        self,
+        user_id: int,
+        shots_fired: int,
+        hits: int,
+        misses: int,
+        wins: int,
+        loses: int,
+    ) -> None:
+        await self.execute(
+            """
+            UPDATE players_data
+            SET shots_fired=?, hits=?, misses=?, wins=?, loses=?
+            WHERE _id=?
+            """,
+            shots_fired,
+            hits,
+            misses,
+            wins,
+            loses,
+            user_id,
+        )
+
     async def decrease(self, user_id: int, value_name: str) -> None:
         """Decrease a certain value in the players data."""
         data = await self.fetch_player(user_id)
