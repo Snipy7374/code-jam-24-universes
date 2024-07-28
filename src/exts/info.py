@@ -23,7 +23,7 @@ class InfoCommands(commands.Cog):
                 "This Discord bot was created by the "
                 "Unique Universes team for the Python Discord Code Jam 2024.\n\n"
                 "This bot's main feature is a 2D shooter minigame."
-                f"{'Invoke </shoot:' + str(cmd.id) if cmd is not None else ''}"
+                f"{'Invoke </shoot:' + str(cmd.id) + '>' if cmd is not None else ''}"
             ),
             color=0x87CEEB,
         )
