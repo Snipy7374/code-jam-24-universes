@@ -16,12 +16,14 @@ class InfoCommands(commands.Cog):
     @commands.slash_command()
     async def about(self, inter: disnake.GuildCommandInteraction) -> None:
         """Provide information about the bot."""
+        cmd = self.bot.shoot_cmd
         embed = disnake.Embed(
             title="About",
             description=(
                 "This Discord bot was created by the "
                 "Unique Universes team for the Python Discord Code Jam 2024.\n\n"
                 "This bot's main feature is a 2D shooter minigame."
+                f"{'Invoke </shoot:' + str(cmd.id) if cmd is not None else ''}"
             ),
             color=0x87CEEB,
         )
