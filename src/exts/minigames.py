@@ -26,7 +26,7 @@ def _generate_fake_mac() -> str:
 
 def generate_random_stats(stats: ShootStats, *, skip_health: bool = False) -> None:
     for attr in stats.__slots__:
-        if attr in ("g_acc", "radians_angle", "ammunition", "angle", "total_shots"):
+        if attr in ("g_acc", "radians_angle", "ammunition", "angle", "total_shots", "hits"):
             continue
 
         if attr in ("enemy_position",):
@@ -49,9 +49,11 @@ class Minigames(commands.Cog):
     @commands.slash_command()  # type: ignore[reportUnknownMemberType]
     async def shoot(self, inter: disnake.GuildCommandInteraction) -> None:
         """Run an info overloaded shoot minigame."""
-        view = ShootMenu(inter.author)
+        player = await self.bot.database.fetch_player(inter.author.id)
+        view = ShootMenu(inter.author, player)
         generate_random_stats(view.stats)
         embed = disnake.Embed(title="Shoot minigame", description="\n".join(["." * 10] * 5))
+        embed.add_field("Planet acceleration", f"{round(view.stats.g_acc, 2)} m/s^2")
         embed.add_field("Position", f"{view.stats.position}")
         embed.add_field("Angle", f"{view.stats.angle}")
         embed.add_field("Ammunition (Shots left)", f"{view.stats.ammunition}")
@@ -64,13 +66,11 @@ class Minigames(commands.Cog):
         embed.add_field("Fluff Stat X", f"{view.stats.fluff_stat_x}")
         embed.add_field("Fluff Stat Y", f"{view.stats.fluff_stat_y}")
         embed.add_field("Fluff Stat Z", f"{view.stats.fluff_stat_z}")
-        embed.add_field("Fluff Stat A", f"{view.stats.fluff_stat_a}")
 
         embed.add_field("Enemy Position", f"{view.stats.enemy_position}")
         embed.add_field("Enemy Health", f"{view.stats.enemy_health}")
         embed.add_field("Enemy Energy", f"{view.stats.enemy_energy}")
 
-        embed.add_field("Enemy has Premium Skin (+10 to dodge)", f"{view.stats.enemy_has_premium_skin}")
         embed.add_field("Enemy has VIP Pass (+100 to Pay 2 Win)", f"{view.stats.enemy_has_vip_pass}")
         embed.add_field("Enemy logins in a row", f"{view.stats.enemy_logins_in_a_row}")
 
@@ -83,6 +83,16 @@ class Minigames(commands.Cog):
         embed.add_field("Enemy Serial Number", f"10-{str(inter.user.id*3).replace('4', 'A').replace('3', 'E')}-A")
         embed.add_field("Manufacturer", "Legit Stuff™")
         embed.add_field("MAC address", _generate_fake_mac())
+        embed.add_field(
+            "Your stats",
+            (
+                f"Wins: {player.wins}\n"
+                f"Losses: {player.loses}\n"
+                f"Total Shots: {player.shots_fired}\n"
+                f"Total Hits: {player.hits}\n"
+                f"Total Shots Missed: {player.misses}\n"
+            ),
+        )
         embed.set_footer(text=f"Total shots: {view.stats.total_shots}")
 
         await inter.send(embed=embed, view=view)

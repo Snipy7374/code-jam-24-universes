@@ -11,6 +11,7 @@ from src.logger import setup_logging
 
 if TYPE_CHECKING:
     from asyncio import AbstractEventLoop
+
     from aiosqlite import Connection
 
 __all__: tuple[str] = ("Universe",)

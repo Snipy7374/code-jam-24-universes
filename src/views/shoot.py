@@ -3,11 +3,18 @@ from __future__ import annotations
 import math
 import random
 from asyncio import sleep
+from typing import TYPE_CHECKING, cast
 
 import disnake
 
 # weird import but it's to avoid circular imports
 import src.exts.minigames as games
+from src.bot import Universe
+from src.database import PlayerExistsError
+
+if TYPE_CHECKING:
+    from src.database import PlayerData
+
 
 # acceleration directed to the center of Earth
 # measured in m/s^2
@@ -73,6 +80,7 @@ class ShootStats:
         "total_shots",
         "g_acc",
         "radians_angle",
+        "hits",
     )
 
     def __init__(  # noqa: PLR0913
@@ -121,6 +129,11 @@ class ShootStats:
             MOON_ACCELERATION,
             EARTH_ACCELERATION,
         )
+        self.hits: int = 0
+
+    @property
+    def misses(self) -> int:
+        return self.total_shots - self.hits
 
     @property
     def angle_as_radians(self) -> float:
@@ -152,9 +165,10 @@ class ShootStats:
 class ShootMenu(disnake.ui.View):
     message: disnake.InteractionMessage
 
-    def __init__(self, author: disnake.Member) -> None:
+    def __init__(self, author: disnake.Member, player: PlayerData) -> None:
         super().__init__(timeout=None)
         self.author = author
+        self.cached_player = player
         self.stats = ShootStats()
 
     async def on_timeout(self) -> None:
@@ -195,12 +209,23 @@ class ShootMenu(disnake.ui.View):
                 "Enemy Serial Number",
                 "Manufacturer",
                 "MAC address",
+                "Planet acceleration",
             ):
                 continue
 
             field_name = field["name"]
             # fields whose name is different from the stats class
             # and as such needs a lil' transformation
+            if field_name == "Your stats":
+                field["value"] = (
+                    f"Wins: {self.cached_player.wins}\n"
+                    f"Losses: {self.cached_player.loses}\n"
+                    f"Total Shots: {self.stats.total_shots}\n"
+                    f"Total Hits: {self.stats.hits}\n"
+                    f"Total Shots Missed: {self.stats.misses}"
+                )
+                continue
+
             if field_name in (
                 "Ammunition (Shots left)",
                 "Energy (Moves left)",
@@ -246,6 +271,16 @@ class ShootMenu(disnake.ui.View):
 
     @disnake.ui.button(style=disnake.ButtonStyle.danger, label="Shoot", row=1)
     async def shoot_callback(self, _: disnake.ui.Button[ShootMenu], inter: disnake.MessageInteraction) -> None:
+        bot = cast(Universe, inter.bot)
+
+        try:
+            player = await bot.database.create_player(inter.author.id)
+        except PlayerExistsError:
+            player = None
+
+        if player is None:
+            player = await bot.database.fetch_player(inter.author.id)
+
         if self.stats.ammunition != 0:
             self.stats.total_shots += 1
             self.stats.ammunition -= 1
@@ -268,6 +303,7 @@ class ShootMenu(disnake.ui.View):
                     ),
                     ephemeral=True,
                 )
+                self.stats.hits += 1
                 self.stats.enemy_health -= 2
                 self.stats.energy += 5
                 self.stats.ammunition += 1
@@ -276,7 +312,14 @@ class ShootMenu(disnake.ui.View):
                     self.stats.enemy_health = 0
                     await self.stop_game()
                     await inter.send("You Won!!!!", ephemeral=True)
-                    # update database stats
+                    await bot.database.update_stats(
+                        inter.author.id,
+                        self.stats.total_shots,
+                        self.stats.hits,
+                        self.stats.misses,
+                        player.wins + 1,
+                        player.loses,
+                    )
             else:
                 await inter.send(
                     "Unfortunately you didn't hit the enemy!! Try to change the shoot angle!",
@@ -289,6 +332,13 @@ class ShootMenu(disnake.ui.View):
             if self.stats.ammunition == 0:
                 await self.stop_game()
                 await inter.send("Game Over :'(", ephemeral=True)
-                # update database stats
+                await bot.database.update_stats(
+                    inter.author.id,
+                    self.stats.total_shots,
+                    self.stats.hits,
+                    self.stats.misses,
+                    player.wins,
+                    player.loses + 1,
+                )
         else:
             await inter.send("You can't shoot because you're out of ammunition.")
