@@ -172,9 +172,9 @@ class ShootMenu(disnake.ui.View):
                 field["value"] = (
                     f"Wins: {self.cached_player.wins}\n"
                     f"Losses: {self.cached_player.loses}\n"
-                    f"Total Shots: {self.stats.total_shots}\n"
-                    f"Total Hits: {self.stats.hits}\n"
-                    f"Total Shots Missed: {self.stats.misses}"
+                    f"Total Shots: {self.cached_player.shots_fired + self.stats.total_shots}\n"
+                    f"Total Hits: {self.cached_player.hits + self.stats.hits}\n"
+                    f"Total Shots Missed: {self.cached_player.misses + self.stats.misses}"
                 )
                 continue
 
@@ -185,7 +185,7 @@ class ShootMenu(disnake.ui.View):
             ):
                 field_name = field_name[: field_name.find("(") - 1]
             field["value"] = getattr(self.stats, field_name.lower().replace(" ", "_"))
-        self.message.embeds[0].set_footer(text=f"Total Shots: {self.stats.total_shots}")
+        self.message.embeds[0].set_footer(text=f"Current Game Total Shots: {self.stats.total_shots}")
         await self.message.edit(embed=self.message.embeds[0], view=self)
 
     @disnake.ui.button(style=disnake.ButtonStyle.gray, label="Angle", disabled=True)
@@ -244,7 +244,7 @@ class ShootMenu(disnake.ui.View):
                 ),
                 ephemeral=True,
             )
-            await sleep(1)
+            await sleep(0.5)
 
             if self.stats.enemy_hitted:
                 await inter.send(
