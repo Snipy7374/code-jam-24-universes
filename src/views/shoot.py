@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 import math
 import random
 from asyncio import sleep
@@ -57,79 +58,29 @@ class AngleModal(disnake.ui.Modal):
         return await self.view.update_message()
 
 
+@dataclasses.dataclass
 class ShootStats:
-    __slots__ = (
-        "position",
-        "angle",
-        "ammunition",
-        "energy",
-        "ship_speed",
-        "bullet_velocity",
-        "bullet_type",
-        "obstacles_in_range",
-        "fluff_stat_x",
-        "fluff_stat_y",
-        "fluff_stat_z",
-        "fluff_stat_a",
-        "enemy_position",
-        "enemy_health",
-        "enemy_energy",
-        "enemy_has_premium_skin",
-        "enemy_has_vip_pass",
-        "enemy_logins_in_a_row",
-        "total_shots",
-        "g_acc",
-        "radians_angle",
-        "hits",
-    )
-
-    def __init__(  # noqa: PLR0913
-        self,
-        *,
-        position: int = 0,
-        angle: int = 15,
-        ammunition: int = 5,  # shots left
-        energy: int = 10,  # angles adjustments left
-        ship_speed: int = 0,
-        bullet_velocity: int = 0,
-        bullet_type: str = "?",
-        obstacles_in_range: int = 8,
-        fluff_stat_x: int = 1,
-        fluff_stat_y: int = 2,
-        fluff_stat_z: int = 3,
-        fluff_stat_a: int = 4,
-        enemy_position: int = 10,
-        enemy_health: int = 10,
-        enemy_energy: int = 5,
-        enemy_has_premium_skin: bool = False,
-        enemy_has_vip_pass: bool = False,
-        enemy_logins_in_a_row: int = 3,
-        total_shots: int = 0,
-    ) -> None:
-        self.position = position
-        self.angle = angle
-        self.ammunition = ammunition  # shots left
-        self.energy = energy  # moves left
-        self.ship_speed = ship_speed
-        self.bullet_velocity = bullet_velocity
-        self.bullet_type = bullet_type
-        self.obstacles_in_range = obstacles_in_range
-        self.fluff_stat_x = fluff_stat_x
-        self.fluff_stat_y = fluff_stat_y
-        self.fluff_stat_z = fluff_stat_z
-        self.fluff_stat_a = fluff_stat_a
-        self.enemy_position = enemy_position
-        self.enemy_health = enemy_health
-        self.enemy_energy = enemy_energy
-        self.enemy_has_premium_skin = enemy_has_premium_skin
-        self.enemy_has_vip_pass = enemy_has_vip_pass
-        self.enemy_logins_in_a_row = enemy_logins_in_a_row
-        self.total_shots = total_shots
-        self.g_acc = random.uniform(  # noqa: S311
+    position: int = 0
+    angle: int = 15
+    ammunition: int = 5  # shots left
+    energy: int = 10  # angles adjustments left
+    ship_speed: int = 0
+    bullet_velocity: int = 0
+    bullet_type: str = "?"
+    obstacles_in_range: int = 8
+    enemy_position: int = 10
+    enemy_health: int = 10
+    enemy_energy: int = 5
+    enemy_has_vip_pass: bool = False
+    enemy_logins_in_a_row: int = 3
+    total_shots: int = 0
+    hits: int = 0
+    g_acc: float = dataclasses.field(
+        default_factory=lambda: random.uniform(  # noqa: S311
             MOON_ACCELERATION,
             EARTH_ACCELERATION,
-        )
-        self.hits: int = 0
+        ),
+    )
 
     @property
     def misses(self) -> int:
@@ -202,6 +153,7 @@ class ShootMenu(disnake.ui.View):
         for field in self.message.embeds[0]._fields:  # type: ignore[reportPrivateUsage]
             # fields that shouldn't be updated
             if field["name"] in (
+                "Outer Space Pression",
                 "Ship insured",
                 "Gun cleaned",
                 "Engines checked",
@@ -229,7 +181,6 @@ class ShootMenu(disnake.ui.View):
             if field_name in (
                 "Ammunition (Shots left)",
                 "Energy (Moves left)",
-                "Enemy has Premium Skin (+10 to dodge)",
                 "Enemy has VIP Pass (+100 to Pay 2 Win)",
             ):
                 field_name = field_name[: field_name.find("(") - 1]

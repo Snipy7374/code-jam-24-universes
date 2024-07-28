@@ -25,7 +25,7 @@ def _generate_fake_mac() -> str:
 
 
 def generate_random_stats(stats: ShootStats, *, skip_health: bool = False) -> None:
-    for attr in stats.__slots__:
+    for attr in stats.__dataclass_fields__:
         if attr in ("g_acc", "radians_angle", "ammunition", "angle", "total_shots", "hits"):
             continue
 
@@ -63,9 +63,7 @@ class Minigames(commands.Cog):
         embed.add_field("Bullet Type", f"{view.stats.bullet_type}")
 
         embed.add_field("Obstacles in range", f"{view.stats.obstacles_in_range}")
-        embed.add_field("Fluff Stat X", f"{view.stats.fluff_stat_x}")
-        embed.add_field("Fluff Stat Y", f"{view.stats.fluff_stat_y}")
-        embed.add_field("Fluff Stat Z", f"{view.stats.fluff_stat_z}")
+        embed.add_field("Outer Space Pression", "1.32 x 10^-11 Pa")
 
         embed.add_field("Enemy Position", f"{view.stats.enemy_position}")
         embed.add_field("Enemy Health", f"{view.stats.enemy_health}")
