@@ -67,7 +67,9 @@ If the code snippet above is weird looking blame GitHub, to avoid any (and i mea
 
 This repository is the entry of the unique universes team for the Python Discord Code Jam 2024.
 
-# Docker Usage
+You can run the bot either with Docker or manually.
+
+# Running the bot with Docker
 ## Building
 
 ```sh
@@ -79,7 +81,7 @@ docker build -t unique-universes -f .docker/Dockerfile .
 docker run --rm -it -e BOT_TOKEN=YOUR_TOKEN_HERE unique-universes
 ```
 
-# Manual installation
+# Running the bot manually
 ## Installing the dependencies
 
 To install all the required dependencies to run the bot execute these commands:
@@ -104,6 +106,8 @@ BOT_TOKEN=ExampleOfBotTokenHere
 ```sh
 python -m src
 ```
+
+# For the developers
 
 # Setting Up the Dev Env
 
