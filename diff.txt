@@ -1,0 +1,24 @@
+diff --git a/src/exts/minigames.py b/src/exts/minigames.py
+index 23709c1..a183fcf 100644
+--- a/src/exts/minigames.py
++++ b/src/exts/minigames.py
+@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
+ import disnake
+ from disnake.ext import commands
+ from src.views.shoot import ShootMenu
++from src.database import PlayerNotFoundError
+
+ if TYPE_CHECKING:
+     from src.bot import Universe
+@@ -49,7 +50,10 @@ class Minigames(commands.Cog):
+     @commands.slash_command()  # type: ignore[reportUnknownMemberType]
+     async def shoot(self, inter: disnake.GuildCommandInteraction) -> None:
+         """Run an info overloaded shoot minigame."""
+-        player = await self.bot.database.fetch_player(inter.author.id)
++        try:
++            player = await self.bot.database.fetch_player(inter.author.id)
++        except PlayerNotFoundError:
++            player = await self.bot.database.create_player(inter.author.id)
+         view = ShootMenu(inter.author, player)
+         generate_random_stats(view.stats)
+         embed = disnake.Embed(title="Shoot minigame", description="\n".join(["." * 10] * 5))
