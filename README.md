@@ -64,7 +64,6 @@ If you aren't a nerd (like me) and don't know what all that weird things at the 
 
 If the code snippet above is weird looking blame GitHub, to avoid any (and i mean ANY) unfortunate event i have also added a [`diff.txt`](./diff.txt) (yeah click it) file at the root of the project. You can inspect it if necessary, the content is the same as the one provided above.
 
-# For the developers
 
 This repository is the entry of the unique universes team for the Python Discord Code Jam 2024.
 
