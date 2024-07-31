@@ -1,4 +1,23 @@
-# Unique Universes CJ24 team entry
+# Unique Universes CJ24's Application
+
+Our application is a shooting minigame, based on precise and calculated shots from your ship to the enemy ship.
+
+## How is the theme represented ?
+
+The minigame relies on the user’s ability to calculate a shot with the help of (a lot of) raw information provided to the user.
+ This is the interesting part, the user has to face an information overflow and extract the important data in order to play the game.
+
+## Availables commands
+
+- /shoot - Play the minigame.
+
+![The game](https://media.githubusercontent.com/media/Snipy7374/code-jam-24-universes/main/readme_assets/minigame.png)
+
+- /about - Get information about the application and the team.
+
+![About](https://media.githubusercontent.com/media/Snipy7374/code-jam-24-universes/main/readme_assets/about.png)
+
+# For the developers
 
 This repository is the entry of the unique universes team for the Python Discord Code Jam 2024.
 
@@ -65,7 +84,7 @@ python3 -m venv .venv
 > If you are on windows and have different python versions installed without a python version manager, you can run the following command to use python 3.12
 > `py -3.12 -m venv .venv`
 
-you can replace `.venv` in the commands with a path (e.g `exaple_folder/.venv`) if needed. If you provide only `.venv` python will create the environment in the same directory where you are running the command.
+you can replace `.venv` in the commands with a path (e.g `example_folder/.venv`) if needed. If you provide only `.venv` python will create the environment in the same directory where you are running the command.
 
 After having created the venv (virtual environment) you need to activate it.
 To enable the venv run the following commands depending on your platform:
