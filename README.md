@@ -11,11 +11,11 @@ The minigame relies on the user’s ability to calculate a shot with the help of
 
 - /shoot - Play the minigame.
 
-![The game](https://media.githubusercontent.com/media/Snipy7374/code-jam-24-universes/main/readme_assets/minigame.png)
+![The game](./readme_assets/minigame.png)
 
 - /about - Get information about the application and the team.
 
-![About](https://media.githubusercontent.com/media/Snipy7374/code-jam-24-universes/main/readme_assets/about.png)
+![About](./readme_assets/about.png)
 
 # For the developers
 
