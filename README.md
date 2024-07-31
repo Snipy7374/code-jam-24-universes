@@ -13,6 +13,10 @@ The minigame relies on the user’s ability to calculate a shot with the help of
 
 ![The game](./readme_assets/minigame.png)
 
+The rules are simple. You are given an amount of ammunitions with which you can hit an enemy. The enemy position is proportional to your position, instead the health is capped at a given value and will decrease when you hit the enemy.
+After every shot the enemy will change position, though if you have hitted the enemy you will have 1 ammunition given back and some HP regenerated.
+If you miss the enemy nothing happens, you just lost one ammunition and the enemy change position.
+
 - /about - Get information about the application and the team.
 
 ![About](./readme_assets/about.png)
