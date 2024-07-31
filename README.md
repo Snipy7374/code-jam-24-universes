@@ -19,11 +19,11 @@ The minigame relies on the user’s ability to calculate a shot with the help of
 
 # Team members contribution
 
-- **@Snipy7374**: Worked on the bot's structure, the game design and the game logic (physics/maths & database communication).
-- **@Mmesek**: Worked on the game design, the game logic (physics/maths) and the UI.
+- **@Snipy7374 (Team Leader)**: Worked on the bot's structure, the game design, the game logic (physics/maths & database communication) and the documentation.
+- **@Mmesek**: Worked on the game design, the docker image, the game logic (physics/maths), the UI and the documentation.
 - **@stroh13**: Worked on the about command and the game logic (physics/maths).
 - **@Astroyo**: Worked on the game logic (database communication).
-- **@EarthKii**: Worked on the game design and the documentation.
+- **@EarthKiii**: Worked on the game design and the documentation.
 
 # For the developers
 
